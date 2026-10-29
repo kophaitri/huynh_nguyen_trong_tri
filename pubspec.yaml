@@ -1,0 +1,31 @@
+﻿name: huynh_nguyen_trong_tri
+description: "TriWork - Employee attendance app by Huynh Nguyen Trong Tri."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.13.3
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  dio: ^5.11.1
+  flutter_secure_storage: ^11.2.0
+  mobile_scanner: ^7.4.2
+  geolocator: ^14.1.2
+  camera: ^0.12.2
+  google_mlkit_face_detection: ^0.15.1
+  qr_flutter: ^4.1.0
+  sensors_plus: ^7.1.1
+  image_picker: ^1.2.4
+  google_mlkit_text_recognition: ^0.17.1
+  google_mlkit_translation: ^0.15.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true

@@ -1,0 +1,80 @@
+﻿TRIWORK - ỨNG DỤNG CHẤM CÔNG NHÂN VIÊN
+CÁC CHỨC NĂNG ĐÃ THỰC HIỆN
+
+Sinh viên: Huỳnh Nguyễn Trọng Trí
+MSSV: 2380614104
+Nhóm: 9
+Tên project: huynh_nguyen_trong_tri
+
+1. Tài khoản và phân quyền
+- Đăng ký tài khoản, xác minh email bằng OTP.
+- Đăng nhập bằng email, mật khẩu và OTP; hỗ trợ gửi lại mã.
+- Duy trì phiên đăng nhập, xử lý phiên hết hạn và đăng xuất.
+- Phân quyền Admin, Manager, Employee và hiển thị menu theo vai trò.
+- Xem thông tin hồ sơ người dùng.
+
+2. Quản lý nhân viên
+- Xem danh sách, tìm kiếm, phân trang và xem chi tiết nhân viên.
+- Thêm, sửa, xóa nhân viên theo quyền Admin và khả năng của backend.
+- Manager xem danh sách và thông tin nhân viên.
+
+3. Quản lý phòng ban, ca làm và địa điểm
+- Xem, thêm, sửa, xóa phòng ban theo quyền Admin.
+- Quản lý ca làm: tên ca, giờ bắt đầu, giờ kết thúc và thời gian cho phép đi muộn.
+- Quản lý địa điểm: tên, địa chỉ, tọa độ, bán kính chấm công và ca làm liên quan.
+- Kiểm tra dữ liệu nhập và xác nhận trước khi xóa.
+
+4. Quản lý đơn nghỉ phép
+- Employee xem, tạo, sửa và hủy đơn của mình khi đang chờ duyệt.
+- Admin/Manager xem, duyệt hoặc từ chối đơn nghỉ phép.
+- Theo dõi trạng thái đơn nghỉ phép.
+
+5. Chấm công và lịch sử
+- Quét mã QR bằng camera trong quy trình chấm công.
+- Hiển thị mã QR động cho người dùng có quyền quản lý.
+- Gửi yêu cầu chấm công vào/ra kèm vị trí theo quy trình của hệ thống.
+- Hiển thị trạng thái, thời gian và lịch sử chấm công cá nhân.
+- Thông báo lỗi QR, ngoài vùng chấm công, thiếu quyền hoặc mất kết nối.
+
+6. Ba chức năng nâng cao chọn thuyết trình
+
+b. Chia sẻ vị trí GPS
+- Lấy vị trí thực tế của điện thoại khi người dùng yêu cầu.
+- Xin quyền vị trí và hướng dẫn bật định vị.
+- Xác nhận chia sẻ vị trí để hệ thống kiểm tra vùng chấm công.
+
+d. Đo chuyển động
+- Đọc gia tốc kế và hiển thị gia tốc X/Y/Z, độ lớn gia tốc.
+- Hiển thị trạng thái tương đối ổn định, có chuyển động hoặc rung/lắc mạnh.
+- Vẽ biểu đồ chuyển động theo thời gian thực.
+- Có nút Bắt đầu/Dừng và thông báo khi cảm biến không khả dụng.
+- Tự dừng cảm biến khi rời màn hình hoặc đưa ứng dụng xuống nền.
+
+f. Nhận dạng và dịch văn bản từ ảnh chụp
+- Chụp ảnh hoặc chọn ảnh có sẵn để nhận dạng chữ.
+- Hiển thị văn bản gốc và dịch hai chiều tiếng Anh - tiếng Việt.
+- Tải mô hình ngôn ngữ lần đầu và dịch ngoại tuyến khi đã có mô hình.
+- Sao chép văn bản gốc, bản dịch và chụp lại ảnh.
+- Hiển thị trạng thái tải mô hình, lỗi quyền và thông báo ảnh không có chữ.
+
+7. TriWork Smart Insights - Tính năng sáng tạo
+- Phân tích lịch sử chấm công theo khoảng thời gian được chọn.
+- Thống kê số lượt chấm công vào, số buổi đúng giờ, đi muộn và tỷ lệ đúng giờ
+  khi dữ liệu đáp ứng yêu cầu.
+- Hiển thị thẻ số liệu và biểu đồ thống kê.
+- Gợi ý giờ chuẩn bị đi làm từ giờ bắt đầu ca được chọn và khoảng đệm 15 phút.
+- Hiển thị Chưa đủ dữ liệu khi chưa thể tính toán chỉ số.
+
+8. Kiểm tra chuyển động khuôn mặt - Chức năng bổ sung
+- Phát hiện khuôn mặt bằng camera trước.
+- Hướng dẫn chớp mắt và quay đầu để kiểm tra chuyển động tại thiết bị.
+- Xử lý lỗi camera, quyền truy cập và hỗ trợ thử lại.
+- Đây là kiểm tra chuyển động khuôn mặt, không phải đăng nhập bằng khuôn mặt
+  hoặc xác minh danh tính.
+
+9. Giao diện và trải nghiệm sử dụng
+- Giao diện navy/trắng, dashboard riêng theo vai trò.
+- Hiển thị lời chào, ngày hiện tại và lối tắt chức năng.
+- Hỗ trợ màn hình điện thoại nhỏ và biểu mẫu cuộn khi mở bàn phím.
+- Có trạng thái đang tải, dữ liệu trống, thông báo lỗi, làm mới và thử lại.
+- Giữ dữ liệu đã tải để hạn chế chờ khi chuyển tab.
