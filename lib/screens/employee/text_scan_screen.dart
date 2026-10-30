@@ -128,22 +128,24 @@ class _TextScanScreenState extends State<TextScanScreen> {
                 Container(
                   padding: const EdgeInsets.all(24),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF132D50),
+                    color: Theme.of(context).colorScheme.primaryContainer,
                     borderRadius: BorderRadius.circular(24),
                   ),
-                  child: const Column(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Icon(
                         Icons.document_scanner_outlined,
-                        color: Color(0xFF87E7C2),
+                        color: Theme.of(context).colorScheme.onPrimaryContainer,
                         size: 36,
                       ),
                       SizedBox(height: 12),
                       Text(
                         'Từ hình ảnh đến ngôn ngữ',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onPrimaryContainer,
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
                         ),
@@ -151,7 +153,11 @@ class _TextScanScreenState extends State<TextScanScreen> {
                       SizedBox(height: 8),
                       Text(
                         'Chụp hoặc chọn ảnh rõ chữ Latin, đọc nội dung rồi dịch Anh ↔ Việt ngay trên thiết bị.',
-                        style: TextStyle(color: Color(0xFFD5E6F5)),
+                        style: TextStyle(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onPrimaryContainer,
+                        ),
                       ),
                     ],
                   ),
@@ -248,9 +254,12 @@ class _TextScanScreenState extends State<TextScanScreen> {
                   title: 'Bản dịch · ${_source.opposite.label}',
                   text: _result?.translation ?? '',
                 ),
-                const Text(
+                Text(
                   'Bản dịch tự động · powered by Google Translate (ML Kit trên thiết bị)',
-                  style: TextStyle(color: Color(0xFF63738A), fontSize: 12),
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    fontSize: 12,
+                  ),
                 ),
                 const SizedBox(height: 12),
                 const Text(

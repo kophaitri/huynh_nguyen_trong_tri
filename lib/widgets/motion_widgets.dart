@@ -20,7 +20,7 @@ class MotionReadingCard extends StatelessWidget {
     elevation: 0,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(18),
-      side: const BorderSide(color: Color(0xFFE1E8F2)),
+      side: BorderSide(color: Theme.of(context).colorScheme.outlineVariant),
     ),
     child: Padding(
       padding: const EdgeInsets.all(18),
@@ -38,7 +38,12 @@ class MotionReadingCard extends StatelessWidget {
                 ?.copyWith(color: color, fontWeight: FontWeight.w800),
           ),
           const SizedBox(height: 4),
-          const Text('m/s²', style: TextStyle(color: Color(0xFF63738A))),
+          Text(
+            'm/s²',
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
+          ),
         ],
       ),
     ),
@@ -74,7 +79,12 @@ class MotionChart extends StatelessWidget {
                         textAlign: TextAlign.center,
                       ),
                     )
-                  : CustomPaint(painter: _MotionPainter(samples)),
+                  : CustomPaint(
+                      painter: _MotionPainter(
+                        samples,
+                        Theme.of(context).colorScheme,
+                      ),
+                    ),
             ),
           ),
           if (samples.isNotEmpty)
@@ -93,13 +103,16 @@ class MotionChart extends StatelessWidget {
               ),
             ),
           const SizedBox(height: 14),
-          const Wrap(
+          Wrap(
             spacing: 18,
             runSpacing: 8,
             children: [
-              _ChartLegend(color: Color(0xFF132D50), label: 'Độ lớn |a|'),
               _ChartLegend(
-                color: Color(0xFF16845B),
+                color: Theme.of(context).colorScheme.primary,
+                label: 'Độ lớn |a|',
+              ),
+              _ChartLegend(
+                color: Theme.of(context).colorScheme.tertiary,
                 label: 'Biến thiên đã làm mượt',
               ),
             ],
@@ -126,8 +139,9 @@ class _ChartLegend extends StatelessWidget {
 }
 
 class _MotionPainter extends CustomPainter {
-  _MotionPainter(this.samples);
+  _MotionPainter(this.samples, this.scheme);
   final List<MotionSample> samples;
+  final ColorScheme scheme;
   @override
   void paint(Canvas canvas, Size size) {
     if (samples.isEmpty || size.width <= 40 || size.height <= 0) return;
@@ -139,7 +153,7 @@ class _MotionPainter extends CustomPainter {
     );
     final ceiling = (maxValue / 5).ceil() * 5.0;
     final grid = Paint()
-      ..color = const Color(0xFFE0E7F0)
+      ..color = scheme.outlineVariant
       ..strokeWidth = 1;
     for (var i = 0; i <= 3; i++) {
       final y = bounds.bottom - bounds.height * i / 3;
@@ -147,7 +161,7 @@ class _MotionPainter extends CustomPainter {
       final label = TextPainter(
         text: TextSpan(
           text: (ceiling * i / 3).toStringAsFixed(0),
-          style: const TextStyle(fontSize: 10, color: Color(0xFF63738A)),
+          style: TextStyle(fontSize: 10, color: scheme.onSurfaceVariant),
         ),
         textDirection: TextDirection.ltr,
       )..layout(maxWidth: 34);
@@ -187,12 +201,12 @@ class _MotionPainter extends CustomPainter {
       }
     }
 
-    series((s) => s.magnitude, const Color(0xFF132D50));
-    series((s) => s.variation, const Color(0xFF16845B));
+    series((s) => s.magnitude, scheme.primary);
+    series((s) => s.variation, scheme.tertiary);
     canvas.restore();
   }
 
   @override
   bool shouldRepaint(covariant _MotionPainter oldDelegate) =>
-      oldDelegate.samples != samples;
+      oldDelegate.samples != samples || oldDelegate.scheme != scheme;
 }

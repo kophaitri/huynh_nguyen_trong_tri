@@ -241,9 +241,11 @@ class _RecordListScreenState<T> extends State<RecordListScreen<T>> {
                                 : _error != null
                                 ? 'Cập nhật thất bại · đây là dữ liệu lần tải trước.'
                                 : 'Dữ liệu trong bộ nhớ (tối đa 60 giây).',
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 12,
-                              color: Color(0xFF63738A),
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSurfaceVariant,
                             ),
                           ),
                         ),

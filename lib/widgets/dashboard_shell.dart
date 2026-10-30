@@ -20,6 +20,8 @@ import '../screens/shared/crud_route.dart';
 import '../screens/shifts/shift_screen.dart';
 import '../services/auth_service.dart';
 import '../services/dashboard_service.dart';
+import '../services/local_profile_service.dart';
+import 'profile_avatar.dart';
 import 'crud_widgets.dart';
 import 'insight_widgets.dart';
 
@@ -247,8 +249,8 @@ class _DashboardShellState extends State<DashboardShell>
       bottomNavigationBar: NavigationBar(
         selectedIndex: index,
         labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
-        backgroundColor: Colors.white,
-        indicatorColor: const Color(0xFFD9F4E9),
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        indicatorColor: Theme.of(context).colorScheme.secondaryContainer,
         destinations: destinations,
         onDestinationSelected: (value) {
           if (value == _index) return;
@@ -302,11 +304,13 @@ class _DashboardShellState extends State<DashboardShell>
                           onRetry: _reload,
                         ),
                       if (data?.cachedParts.isNotEmpty == true)
-                        const Text(
+                        Text(
                           'Có dữ liệu từ bộ nhớ (tối đa 60 giây).',
                           style: TextStyle(
                             fontSize: 12,
-                            color: Color(0xFF63738A),
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onSurfaceVariant,
                           ),
                         ),
                       _today(
@@ -469,6 +473,10 @@ class _DashboardShellState extends State<DashboardShell>
     ),
   );
   Widget _greeting() {
+    final profiles = LocalProfileScope.maybeOf(context);
+    final displayName =
+        profiles?.displayName(widget.user.id, widget.user.fullName) ??
+        widget.user.fullName;
     final hour = DashboardService.vietnamTime(DateTime.now()).hour;
     final greeting = hour < 12
         ? 'Chào buổi sáng'
@@ -478,10 +486,13 @@ class _DashboardShellState extends State<DashboardShell>
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
+        gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Color(0xFF132D50), Color(0xFF1C5279)],
+          colors: [
+            Theme.of(context).colorScheme.primaryContainer,
+            Theme.of(context).colorScheme.secondaryContainer,
+          ],
         ),
         borderRadius: BorderRadius.circular(26),
       ),
@@ -490,13 +501,17 @@ class _DashboardShellState extends State<DashboardShell>
         children: [
           Row(
             children: [
-              Icon(widget.icon, color: const Color(0xFF87E7C2), size: 28),
+              Icon(
+                widget.icon,
+                color: Theme.of(context).colorScheme.onPrimaryContainer,
+                size: 28,
+              ),
               const SizedBox(width: 10),
               Expanded(
                 child: Text(
                   widget.title,
-                  style: const TextStyle(
-                    color: Color(0xFFD5E6F5),
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onPrimaryContainer,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -506,13 +521,25 @@ class _DashboardShellState extends State<DashboardShell>
           const SizedBox(height: 22),
           Text(
             '$greeting,',
-            style: const TextStyle(color: Color(0xFFD5E6F5), fontSize: 16),
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.onPrimaryContainer,
+              fontSize: 16,
+            ),
           ),
           const SizedBox(height: 5),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: ProfileAvatar(
+              name: displayName,
+              path: profiles?.avatarFor(widget.user.id),
+              radius: 26,
+            ),
+          ),
+          const SizedBox(height: 10),
           Text(
-            widget.user.fullName,
-            style: const TextStyle(
-              color: Colors.white,
+            displayName,
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.onPrimaryContainer,
               fontSize: 26,
               fontWeight: FontWeight.w800,
             ),
@@ -520,12 +547,16 @@ class _DashboardShellState extends State<DashboardShell>
           const SizedBox(height: 14),
           Text(
             DashboardService.dateLabel(DateTime.now()),
-            style: const TextStyle(color: Colors.white),
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.onPrimaryContainer,
+            ),
           ),
           const SizedBox(height: 8),
           Text(
             'Vai trò: ${widget.user.roleName}',
-            style: const TextStyle(color: Color(0xFF87E7C2)),
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.onPrimaryContainer,
+            ),
           ),
         ],
       ),
@@ -563,8 +594,8 @@ class _DashboardShellState extends State<DashboardShell>
             const SizedBox(height: 10),
             Text(
               status,
-              style: const TextStyle(
-                color: Color(0xFF132D50),
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.primary,
                 fontSize: 21,
                 fontWeight: FontWeight.w700,
               ),
@@ -625,9 +656,12 @@ class _DashboardShellState extends State<DashboardShell>
               ],
             ),
             const SizedBox(height: 12),
-            const Text(
+            Text(
               'Các nút mở quy trình chuẩn bị; bạn xác nhận vị trí, QR và khuôn mặt trước khi gửi.',
-              style: TextStyle(fontSize: 12, color: Color(0xFF63738A)),
+              style: TextStyle(
+                fontSize: 12,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
             ),
           ],
         ),
@@ -644,7 +678,10 @@ class _DashboardShellState extends State<DashboardShell>
             ?.copyWith(fontWeight: FontWeight.w700),
       ),
       const SizedBox(height: 5),
-      Text(subtitle, style: const TextStyle(color: Color(0xFF63738A))),
+      Text(
+        subtitle,
+        style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
+      ),
     ],
   );
   Widget _shortcut(
@@ -658,7 +695,7 @@ class _DashboardShellState extends State<DashboardShell>
     elevation: 0,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(20),
-      side: const BorderSide(color: Color(0xFFE2E9F3)),
+      side: BorderSide(color: Theme.of(context).colorScheme.outlineVariant),
     ),
     clipBehavior: Clip.antiAlias,
     child: InkWell(
@@ -670,12 +707,15 @@ class _DashboardShellState extends State<DashboardShell>
           children: [
             DecoratedBox(
               decoration: BoxDecoration(
-                color: const Color(0xFFECF5F8),
+                color: Theme.of(context).colorScheme.secondaryContainer,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Padding(
                 padding: const EdgeInsets.all(10),
-                child: Icon(icon, color: const Color(0xFF196B77)),
+                child: Icon(
+                  icon,
+                  color: Theme.of(context).colorScheme.onSecondaryContainer,
+                ),
               ),
             ),
             const SizedBox(width: 12),
@@ -690,9 +730,9 @@ class _DashboardShellState extends State<DashboardShell>
                   const SizedBox(height: 6),
                   Text(
                     subtitle,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 12,
-                      color: Color(0xFF63738A),
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
                     ),
                   ),
                 ],

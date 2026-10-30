@@ -1,13 +1,25 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../core/network/api_client.dart';
 import '../core/storage/token_storage.dart';
 import '../screens/auth/auth_gate.dart';
 import '../services/auth_service.dart';
+import '../services/app_settings_service.dart';
+import '../services/local_profile_service.dart';
+import 'app_theme.dart';
 
 class TriWorkApp extends StatefulWidget {
-  const TriWorkApp({super.key, this.authService});
+  const TriWorkApp({
+    super.key,
+    this.authService,
+    this.settingsService,
+    this.localProfileService,
+  });
   final AuthService? authService;
+  final AppSettingsService? settingsService;
+  final LocalProfileService? localProfileService;
 
   @override
   State<TriWorkApp> createState() => _TriWorkAppState();
@@ -18,53 +30,68 @@ class _TriWorkAppState extends State<TriWorkApp> {
       widget.authService ??
       AuthService(client: ApiClient(), storage: SecureTokenStorage());
 
+  late final _settings = widget.settingsService ?? AppSettingsService();
+  late final _profiles = widget.localProfileService ?? LocalProfileService();
+  void _bindProfile() {
+    unawaited(_profiles.bindUser(_auth.user?.id));
+    unawaited(_settings.bindUser(_auth.user?.id));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _auth.addListener(_bindProfile);
+    _bindProfile();
+  }
+
   @override
   void dispose() {
+    if (widget.settingsService == null) _settings.dispose();
+    _auth.removeListener(_bindProfile);
+    if (widget.localProfileService == null) _profiles.dispose();
     if (widget.authService == null) _auth.dispose();
     super.dispose();
   }
 
   @override
-  Widget build(BuildContext context) {
-    const navy = Color(0xFF132D50);
-    return MaterialApp(
-      title: 'TriWork',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: navy,
-          primary: navy,
-          surface: Colors.white,
-        ),
-        scaffoldBackgroundColor: const Color(0xFFF3F6FB),
-        inputDecorationTheme: InputDecorationTheme(
-          filled: true,
-          fillColor: const Color(0xFFF7F9FC),
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 18,
-          ),
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(14)),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(14),
-            borderSide: const BorderSide(color: Color(0xFFDCE3EE)),
-          ),
-        ),
-        filledButtonTheme: FilledButtonThemeData(
-          style: FilledButton.styleFrom(
-            minimumSize: const Size.fromHeight(54),
-            textStyle: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-            ),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(14),
-            ),
-          ),
+  void reassemble() {
+    super.reassemble();
+    // Reconnect bindings after hot reload as well as a normal cold start.
+    _auth.removeListener(_bindProfile);
+    _auth.addListener(_bindProfile);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _bindProfile();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) => LocalProfileScope(
+    service: _profiles,
+    child: AppSettingsScope(
+      service: _settings,
+      child: AnimatedBuilder(
+        animation: _settings,
+        builder: (context, _) => MaterialApp(
+          title: 'TriWork',
+          debugShowCheckedModeBanner: false,
+          themeAnimationDuration: Duration.zero,
+          theme: AppTheme.create(_settings.value.accent, Brightness.light),
+          darkTheme: AppTheme.create(_settings.value.accent, Brightness.dark),
+          themeMode: _settings.effectiveThemeMode,
+          builder: (context, child) {
+            final media = MediaQuery.of(context);
+            return MediaQuery(
+              data: media.copyWith(
+                textScaler: TextScaler.linear(
+                  media.textScaler.scale(1) * _settings.value.textSize.scale,
+                ),
+              ),
+              child: child ?? const SizedBox.shrink(),
+            );
+          },
+          home: AuthGate(auth: _auth),
         ),
       ),
-      home: AuthGate(auth: _auth),
-    );
-  }
+    ),
+  );
 }

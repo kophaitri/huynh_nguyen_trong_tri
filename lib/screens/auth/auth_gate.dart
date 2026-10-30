@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../models/user_model.dart';
 import '../../services/auth_service.dart';
+import '../../services/app_settings_service.dart';
 import '../../widgets/auth_frame.dart';
 import '../admin/admin_dashboard.dart';
 import '../employee/employee_dashboard.dart';
@@ -67,6 +68,10 @@ class _AuthGateState extends State<AuthGate> {
       }
       final user = auth.user;
       if (user == null) return LoginScreen(auth: auth);
+      final settings = AppSettingsScope.maybeOf(context);
+      if (settings != null && !settings.readyFor(user.id)) {
+        return const Scaffold(body: Center(child: CircularProgressIndicator()));
+      }
       return switch (user.role) {
         UserRole.admin => AdminDashboard(user: user, auth: auth),
         UserRole.manager => ManagerDashboard(user: user, auth: auth),

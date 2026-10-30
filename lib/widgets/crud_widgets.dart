@@ -26,9 +26,9 @@ class StatusBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = switch (status) {
-      LeaveStatus.pending => const Color(0xFF976200),
-      LeaveStatus.approved => const Color(0xFF14774D),
-      LeaveStatus.rejected => const Color(0xFFAA3333),
+      LeaveStatus.pending => Theme.of(context).colorScheme.tertiary,
+      LeaveStatus.approved => Theme.of(context).colorScheme.primary,
+      LeaveStatus.rejected => Theme.of(context).colorScheme.error,
     };
     return Chip(
       label: Text(status.label, style: TextStyle(color: color)),
@@ -46,7 +46,11 @@ class CrudEmptyState extends StatelessWidget {
     padding: const EdgeInsets.all(28),
     child: Column(
       children: [
-        const Icon(Icons.inbox_outlined, size: 48, color: Color(0xFF63738A)),
+        Icon(
+          Icons.inbox_outlined,
+          size: 48,
+          color: Theme.of(context).colorScheme.onSurfaceVariant,
+        ),
         const SizedBox(height: 16),
         Text(message, textAlign: TextAlign.center),
       ],

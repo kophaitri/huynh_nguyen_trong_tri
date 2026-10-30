@@ -168,7 +168,10 @@ class CachedLoadViewState<T> extends State<CachedLoadView<T>> {
                     ? 'Cập nhật thất bại · dữ liệu hiển thị là lần tải trước.'
                     : 'Dữ liệu trong bộ nhớ (tối đa 60 giây).',
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 12, color: Color(0xFF63738A)),
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
               ),
               if (_error != null)
                 TextButton(onPressed: refresh, child: const Text('Thử lại')),

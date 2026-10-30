@@ -16,9 +16,9 @@ class TriWorkLogo extends StatelessWidget {
             color: primary,
             borderRadius: BorderRadius.circular(24),
           ),
-          child: const Icon(
+          child: Icon(
             Icons.more_time_rounded,
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.onPrimary,
             size: 44,
             semanticLabel: 'Biểu tượng chấm công TriWork',
           ),
@@ -34,10 +34,12 @@ class TriWorkLogo extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 4),
-        const Text(
+        Text(
           'Mỗi ngày làm việc, một bước tiến.',
           textAlign: TextAlign.center,
-          style: TextStyle(color: Color(0xFF63738A)),
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
+          ),
         ),
       ],
     );

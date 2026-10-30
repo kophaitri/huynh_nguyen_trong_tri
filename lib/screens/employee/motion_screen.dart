@@ -66,22 +66,26 @@ class _MotionScreenState extends State<MotionScreen>
                     Container(
                       padding: const EdgeInsets.all(24),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF132D50),
+                        color: Theme.of(context).colorScheme.primaryContainer,
                         borderRadius: BorderRadius.circular(24),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Icon(
+                          Icon(
                             Icons.vibration_rounded,
-                            color: Color(0xFF87E7C2),
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onPrimaryContainer,
                             size: 36,
                           ),
                           const SizedBox(height: 14),
                           Text(
                             status,
-                            style: const TextStyle(
-                              color: Colors.white,
+                            style: TextStyle(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onPrimaryContainer,
                               fontSize: 23,
                               fontWeight: FontWeight.w700,
                             ),
@@ -91,7 +95,11 @@ class _MotionScreenState extends State<MotionScreen>
                             _motion.running
                                 ? 'Đang đọc cảm biến trực tiếp trên thiết bị.'
                                 : 'Cảm biến chỉ hoạt động sau khi bấm Bắt đầu.',
-                            style: const TextStyle(color: Color(0xFFD5E6F5)),
+                            style: TextStyle(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onPrimaryContainer,
+                            ),
                           ),
                         ],
                       ),
@@ -151,7 +159,7 @@ class _MotionScreenState extends State<MotionScreen>
                         MotionReadingCard(
                           label: 'Độ lớn √(X² + Y² + Z²)',
                           value: sample?.magnitude,
-                          color: const Color(0xFF132D50),
+                          color: Theme.of(context).colorScheme.primary,
                         ),
                         MotionReadingCard(
                           label: 'Biến thiên đã làm mượt',

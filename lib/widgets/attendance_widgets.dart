@@ -58,9 +58,15 @@ class AttendanceReceiptCard extends StatelessWidget {
             Text('Địa điểm: ${record.location ?? location}'),
           Text('Khoảng cách tới điểm: ${record.distance.toStringAsFixed(0)} m'),
           if (record.isLate)
-            const Text('Đi trễ', style: TextStyle(color: Color(0xFF976200))),
+            Text(
+              'Đi trễ',
+              style: TextStyle(color: Theme.of(context).colorScheme.tertiary),
+            ),
           if (record.isEarlyLeave)
-            const Text('Về sớm', style: TextStyle(color: Color(0xFF976200))),
+            Text(
+              'Về sớm',
+              style: TextStyle(color: Theme.of(context).colorScheme.tertiary),
+            ),
           if (record.flags.isNotEmpty)
             const Text('Máy chủ có ghi nhận cảnh báo cho lần chấm công này.'),
         ],

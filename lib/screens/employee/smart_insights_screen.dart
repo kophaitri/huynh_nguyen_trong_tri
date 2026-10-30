@@ -95,24 +95,33 @@ class _SmartInsightsScreenState extends State<SmartInsightsScreen> {
                         Container(
                           padding: const EdgeInsets.all(24),
                           decoration: BoxDecoration(
-                            gradient: const LinearGradient(
-                              colors: [Color(0xFF132D50), Color(0xFF215F8C)],
+                            gradient: LinearGradient(
+                              colors: [
+                                Theme.of(context).colorScheme.primaryContainer,
+                                Theme.of(context)
+                                    .colorScheme
+                                    .secondaryContainer,
+                              ],
                             ),
                             borderRadius: BorderRadius.circular(24),
                           ),
-                          child: const Column(
+                          child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Icon(
                                 Icons.insights_rounded,
-                                color: Color(0xFF77E0BE),
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onPrimaryContainer,
                                 size: 34,
                               ),
                               SizedBox(height: 14),
                               Text(
                                 'Hiểu nhịp làm việc của bạn',
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onPrimaryContainer,
                                   fontSize: 23,
                                   fontWeight: FontWeight.w700,
                                 ),
@@ -120,7 +129,11 @@ class _SmartInsightsScreenState extends State<SmartInsightsScreen> {
                               SizedBox(height: 8),
                               Text(
                                 'Lịch sử thật được phân tích ngay trên thiết bị của bạn.',
-                                style: TextStyle(color: Color(0xFFD4E3F3)),
+                                style: TextStyle(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onPrimaryContainer,
+                                ),
                               ),
                             ],
                           ),
@@ -259,7 +272,9 @@ class _SmartInsightsScreenState extends State<SmartInsightsScreen> {
                                         .textTheme
                                         .headlineMedium
                                         ?.copyWith(
-                                          color: const Color(0xFF132D50),
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
                                           fontWeight: FontWeight.w800,
                                         ),
                                   ),

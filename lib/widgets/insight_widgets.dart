@@ -9,32 +9,34 @@ class InsightStatCard extends StatelessWidget {
     required this.value,
     required this.icon,
     this.note,
-    this.color = const Color(0xFF132D50),
+    this.color,
   });
   final String label;
   final String value;
   final IconData icon;
   final String? note;
-  final Color color;
+  final Color? color;
   @override
   Widget build(BuildContext context) => Card(
     margin: EdgeInsets.zero,
     elevation: 0,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(20),
-      side: const BorderSide(color: Color(0xFFE2E9F3)),
+      side: BorderSide(color: Theme.of(context).colorScheme.outlineVariant),
     ),
     child: Padding(
       padding: const EdgeInsets.all(18),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: color),
+          Icon(icon, color: color ?? Theme.of(context).colorScheme.primary),
           const SizedBox(height: 14),
           Text(
             value,
-            style: Theme.of(context).textTheme.titleLarge
-                ?.copyWith(color: color, fontWeight: FontWeight.w800),
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+              color: color ?? Theme.of(context).colorScheme.primary,
+              fontWeight: FontWeight.w800,
+            ),
           ),
           const SizedBox(height: 6),
           Text(label, style: const TextStyle(fontWeight: FontWeight.w600)),
@@ -42,7 +44,10 @@ class InsightStatCard extends StatelessWidget {
             const SizedBox(height: 6),
             Text(
               note!,
-              style: const TextStyle(fontSize: 12, color: Color(0xFF63738A)),
+              style: TextStyle(
+                fontSize: 12,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
             ),
           ],
         ],

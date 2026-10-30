@@ -19,11 +19,15 @@ class AuthFrame extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
     body: DecoratedBox(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Color(0xFFE8EFF9), Color(0xFFF8FAFD), Color(0xFFEFF4FB)],
+          colors: [
+            Theme.of(context).colorScheme.surfaceContainer,
+            Theme.of(context).colorScheme.surface,
+            Theme.of(context).colorScheme.surfaceContainerLow,
+          ],
         ),
       ),
       child: SafeArea(
@@ -58,9 +62,11 @@ class AuthFrame extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.all(24),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.surface,
                           borderRadius: BorderRadius.circular(24),
-                          border: Border.all(color: const Color(0xFFE3EAF4)),
+                          border: Border.all(
+                            color: Theme.of(context).colorScheme.outlineVariant,
+                          ),
                           boxShadow: const [
                             BoxShadow(
                               color: Color(0x0C132D50),
@@ -85,8 +91,10 @@ class AuthFrame extends StatelessWidget {
                             const SizedBox(height: 8),
                             Text(
                               subtitle,
-                              style: const TextStyle(
-                                color: Color(0xFF63738A),
+                              style: TextStyle(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onSurfaceVariant,
                                 height: 1.5,
                               ),
                             ),
@@ -96,11 +104,11 @@ class AuthFrame extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 24),
-                      const Text(
+                      Text(
                         'TRIWORK  •  CHẤM CÔNG NHÂN VIÊN',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          color: Color(0xFF63738A),
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
                           fontSize: 11,
                           fontWeight: FontWeight.w600,
                           letterSpacing: 1.2,
@@ -130,14 +138,18 @@ class AuthMessage extends StatelessWidget {
       padding: const EdgeInsets.all(12),
       margin: const EdgeInsets.only(bottom: 20),
       decoration: BoxDecoration(
-        color: isError ? const Color(0xFFFFF0F0) : const Color(0xFFEDF4FF),
+        color: isError
+            ? Theme.of(context).colorScheme.errorContainer
+            : Theme.of(context).colorScheme.primaryContainer,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Text(
         message,
         style: TextStyle(
           height: 1.4,
-          color: isError ? const Color(0xFF9D2424) : const Color(0xFF132D50),
+          color: isError
+              ? Theme.of(context).colorScheme.onErrorContainer
+              : Theme.of(context).colorScheme.onPrimaryContainer,
         ),
       ),
     ),

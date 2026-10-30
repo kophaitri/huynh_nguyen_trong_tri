@@ -135,9 +135,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
               textInputAction: TextInputAction.next,
             ),
             const SizedBox(height: 8),
-            const Text(
+            Text(
               'Ít nhất 6 ký tự, có chữ thường và số.',
-              style: TextStyle(color: Color(0xFF63738A)),
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
             ),
             const SizedBox(height: 20),
             PasswordField(
